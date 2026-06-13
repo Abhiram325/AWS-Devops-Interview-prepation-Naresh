@@ -1,0 +1,12 @@
+What is the difference between git merge and git rebase?"
+
+git merge integrates changes by creating a new merge commit, preserving the history of both branches.
+git rebase moves your branch on top of another, rewriting commit history to create a linear sequence.
+                              ...........................................................................
+"Git Merge combines branches and creates a merge commit, preserving the branch history. Git Rebase moves or reapplies commits from one branch onto another, creating a cleaner linear history but rewriting commit history.
+..........................................................................................................................................................................................................
+What is git stash, and when do you use it?"
+
+To save the changes locally, we will use git stash. So, in case you are in the middle of something and need to jump over to the other job, and at the same time you don’t want to lose your current edits, then you can use GIT stash.
+.............................................................................................................................................................................................................................................................................
+
