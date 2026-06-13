@@ -1,0 +1,605 @@
+1. Pipeline as Code in Jenkins
+Answer:
+Pipeline as Code means defining the entire CI/CD workflow in a Jenkinsfile stored in Git.
+Interview:
+
+In my project, we maintain Jenkinsfiles in GitHub. Whenever developers update the application code, Jenkins automatically reads the Jenkinsfile and executes stages like Build, SonarQube Scan, Docker Build, Push to ECR, and Deployment to EKS.
+
+
+2. Difference Between Declarative and Scripted Pipeline
+DeclarativeScriptedEasy syntaxComplex syntaxStructuredFlexibleUses pipeline blockUses node blockRecommendedAdvanced use cases
+Interview:
+
+Mostly I use Declarative pipelines because they are easier to maintain and understand.
+
+
+3. What stages do you use in CI/CD Pipeline?
+Answer:
+
+
+Checkout
+
+
+Build
+
+
+Unit Test
+
+
+SonarQube Scan
+
+
+Quality Gate
+
+
+Vulnerability Scan
+
+
+Docker Build
+
+
+Push Image
+
+
+Deploy to Dev
+
+
+Approval
+
+
+Deploy to Prod
+
+
+Interview:
+
+Our pipeline starts from code checkout and ends with deployment to EKS after passing quality and security checks.
+
+
+4. How do you trigger a pipeline automatically on code push?
+Answer:
+Using GitHub Webhooks.
+Interview:
+
+We configure GitHub webhook to notify Jenkins whenever code is pushed. Jenkins receives the event and starts the pipeline automatically.
+
+
+5. How do you store credentials securely in Jenkins?
+Answer:
+Using Jenkins Credentials Store.
+Interview:
+
+We never hardcode passwords. AWS keys, Docker Hub credentials, Git tokens are stored in Jenkins Credentials Manager.
+
+
+6. How do you manage secrets in CI/CD?
+Answer:
+
+
+Jenkins Credentials
+
+
+AWS Secrets Manager
+
+
+Kubernetes Secrets
+
+
+Interview:
+
+For Kubernetes deployments we store application secrets in Kubernetes Secrets and sensitive AWS credentials in Secrets Manager.
+
+
+7. What is a Quality Gate?
+Answer:
+A Quality Gate checks code quality metrics like:
+
+
+Bugs
+
+
+Vulnerabilities
+
+
+Code Coverage
+
+
+Code Smells
+
+
+before allowing deployment.
+
+8. How does SonarQube fail the pipeline?
+Answer:
+If code doesn't meet configured thresholds, SonarQube returns FAILED status and Jenkins stops the pipeline.
+
+9. What does waitForQualityGate do?
+Answer:
+Jenkins waits for SonarQube analysis result before moving to the next stage.
+Example:
+waitForQualityGate abortPipeline: true
+
+10. If Jenkins Job Fails, How Do You Troubleshoot?
+Interview Answer:
+
+First I check Console Output, then Jenkins logs, verify credentials, plugin status, network connectivity, and agent availability.
+
+
+11. Pipeline is Slow. How Do You Optimize?
+Answer:
+
+
+Parallel execution
+
+
+Reuse Docker layers
+
+
+Cache Maven dependencies
+
+
+Use distributed agents
+
+
+Skip unnecessary stages
+
+
+Interview:
+
+We reduced build time from 40 minutes to 15 minutes by running tests and scans in parallel.
+
+
+12. Where do you store credentials in Jenkins?
+Answer:
+Manage Jenkins → Credentials
+
+13. What is Jenkins Shared Library?
+Answer:
+Reusable pipeline code stored centrally.
+Interview:
+
+We use shared libraries for common functions like Docker build, EKS deployment, and notifications.
+
+
+14. Default Variables in Jenkins
+Examples:
+BUILD_NUMBERJOB_NAMEWORKSPACEBUILD_IDGIT_BRANCH
+
+15. What is agent any?
+agent any
+Means pipeline can run on any available Jenkins agent.
+
+16. What is Label?
+Used to run jobs on specific nodes.
+agent { label 'docker'}
+
+17. Can we run parallel stages?
+Yes.
+parallel { stage('Test'){} stage('Scan'){}}
+
+18. Can we run stage on specific agent?
+Yes.
+stage('Build'){ agent { label 'maven' }}
+
+19. How do you trigger pipeline on code push?
+Answer:
+GitHub Webhook + Jenkins Pipeline.
+
+20. How do you integrate SonarQube?
+Interview:
+
+I install SonarQube Scanner plugin, configure server details in Jenkins, and execute Sonar scan during build stage.
+
+
+21. Design CI/CD Pipeline for Microservices
+Interview Answer:
+
+Code Push → Build → Unit Test → SonarQube → Docker Build → Push to ECR → Deploy to EKS → Smoke Test → Approval → Production.
+
+
+22. Types of Pipelines in Jenkins
+
+
+Declarative Pipeline
+
+
+Scripted Pipeline
+
+
+Multibranch Pipeline
+
+
+
+23. What is Jenkins and why do we use it?
+Answer:
+Jenkins is an open-source automation server used to automate build, test, and deployment processes.
+
+24. Explain your CI/CD pipeline
+Interview Answer:
+
+Developer pushes code to GitHub. Jenkins triggers automatically through webhook. Jenkins builds the application using Maven, performs SonarQube analysis, runs Trivy scan, creates Docker image, pushes it to ECR, and deploys it to EKS.
+
+
+25. Jenkins Service Down. Troubleshooting?
+systemctl status jenkinsjournalctl -u jenkins
+Check:
+
+
+Java
+
+
+Disk Space
+
+
+Memory
+
+
+Port availability
+
+
+
+26. Jenkins Not Accessible in Browser
+Possible reasons:
+
+
+Service stopped
+
+
+Security Group blocked
+
+
+Port 8080 blocked
+
+
+High CPU/Memory
+
+
+Reverse proxy issue
+
+
+
+27. PollSCM vs Build Periodically
+PollSCM
+Checks repository for changes.
+Build Periodically
+Runs on schedule regardless of code changes.
+
+28. How do you enable Multibranch Pipeline?
+Interview:
+
+Create Multibranch Pipeline Job → Connect GitHub Repository → Jenkins automatically discovers branches and creates jobs.
+
+
+29. Jenkins Logs Location in Linux
+/var/log/jenkins/jenkins.log
+
+30. Basic Jenkins Pipeline
+pipeline { agent any stages {  stage('Build'){   steps{    echo 'Building'   }  } }}
+
+31. Blue-Green Deployment
+Interview Answer:
+
+We maintain two environments, Blue and Green. Jenkins deploys new version to Green, validates it, and then switches traffic from Blue to Green using Load Balancer.
+
+
+32. Automate Process Using Jenkins
+Answer:
+Create pipeline stages and configure automatic triggers using webhook or scheduler.
+
+33. Integrating Maven, Docker, SonarQube, Ansible
+Interview:
+
+Maven for build, SonarQube for code quality, Docker for containerization, and Ansible for server deployment automation.
+
+
+34. Pass Parameters to Pipeline
+parameters { string(name:'VERSION')}
+
+35. Types of Pipelines Implemented
+
+
+CI Pipeline
+
+
+CD Pipeline
+
+
+Multibranch Pipeline
+
+
+
+36. Stages Used
+Checkout → Build → Test → Scan → Package → Deploy
+
+37. What is Jenkins Job?
+A configured task executed by Jenkins.
+
+38. Common Jenkins Issues
+
+
+Disk full
+
+
+Agent disconnected
+
+
+Credential expired
+
+
+Plugin conflicts
+
+
+Build failures
+
+
+
+39. Jenkins Configuration on EC2
+/var/lib/jenkins
+
+40. Backup Jenkins Before Upgrade
+Backup:
+/var/lib/jenkins
+Includes:
+
+
+Jobs
+
+
+Plugins
+
+
+Credentials
+
+
+Configurations
+
+
+
+41. Secure Jenkins Project
+
+
+RBAC
+
+
+HTTPS
+
+
+Credentials Store
+
+
+Matrix Authorization
+
+
+MFA through SSO
+
+
+
+42. Jenkins with Ansible
+ansible-playbook deploy.yml
+Executed from Jenkins stage.
+
+43. Continuous Delivery vs Continuous Deployment
+Delivery
+Needs manual approval.
+Deployment
+Automatic deployment to production.
+
+44. Trigger Only Specific Branch
+when { branch 'main'}
+
+45. Ignore Certain Branches
+Configure branch filters in SCM.
+
+46. Trigger Pipeline on PR
+Use GitHub Branch Source Plugin.
+
+47. Multi-Branch Pipeline Usage
+Interview:
+
+Jenkins automatically creates pipelines for feature, dev, QA, and main branches.
+
+
+48. Integrate S3 with Jenkins
+Use Cases:
+
+
+Artifact Backup
+
+
+Build Logs Storage
+
+
+aws s3 cp artifact.jar s3://bucket/
+
+49. End-to-End CI/CD Workflow
+GitHub → Jenkins → SonarQube → Trivy → Docker → ECR → EKS
+
+50. Configure Jenkins From Scratch
+
+
+Install Java
+
+
+Install Jenkins
+
+
+Open Port 8080
+
+
+Install Plugins
+
+
+Configure Credentials
+
+
+Create Pipeline
+
+
+
+51. Pipeline Takes 45 Minutes
+Optimization:
+
+
+Parallel stages
+
+
+Faster agents
+
+
+Cache dependencies
+
+
+Incremental builds
+
+
+
+52. Common Production Issues
+
+
+Agent disconnected
+
+
+Plugin incompatibility
+
+
+Disk full
+
+
+Credential expiration
+
+
+
+53. Which CI/CD Tool Used and Why?
+Interview:
+
+Jenkins because it is open-source, highly extensible, and integrates well with AWS, Docker, Kubernetes, SonarQube, and GitHub.
+
+
+54. Why Nodes?
+To distribute workload and improve scalability.
+
+55. Upstream and Downstream Jobs
+Upstream: Triggers another job.
+Downstream: Triggered by another job.
+
+56. Post Build Actions
+
+
+Email
+
+
+Slack
+
+
+Archive Artifacts
+
+
+Trigger Job
+
+
+
+57. What is Agent?
+Machine that executes Jenkins jobs.
+
+58. Master vs Slave
+Master (Controller)
+Schedules jobs.
+Agent (Slave)
+Executes jobs.
+
+59. Agent Not Working
+Check:
+java -version
+Verify:
+
+
+Network
+
+
+SSH
+
+
+Agent logs
+
+
+
+60-80 (Most Important Real-Time Answers)
+60. Multi-stage Pipeline
+
+Checkout → Build → Test → Sonar → Docker → ECR → EKS
+
+61. Pipeline Script
+
+Explain your actual Jenkinsfile stage by stage.
+
+62. After Maven Build
+
+SonarQube → Trivy → Docker Build → Push → Deploy
+
+63. Deploy 10 Microservices
+
+Use one pipeline with parallel stages or separate Jenkinsfiles per service.
+
+64. Test After Build
+stage('Test'){ when {   expression { currentBuild.result == null } }}
+65. Artifact Management
+
+Store JAR/WAR in Nexus or Artifactory.
+
+66. Auto Trigger
+
+GitHub Webhook.
+
+67. Jenkins + Kubernetes
+
+Kubernetes Plugin dynamically creates agents as pods.
+
+68. Change Image Tag
+kubectl set image deployment/app app=image:v2
+69. Docker Build and Push
+docker builddocker push
+70. withDockerRegistry
+Used for Docker registry authentication.
+71. Credential Failure
+
+Verify credential ID, permissions, token validity.
+
+72. Manual Approval
+input "Approve Production?"
+73. Quality Gate Failed + abortPipeline:false
+
+Pipeline continues but Quality Gate status is marked failed.
+
+74. Maven Build Slow
+
+Large dependencies, network issues, insufficient CPU/RAM.
+
+75. Missing Environment Variables
+
+Verify Jenkins environment block and credentials mapping.
+
+76. Works in Dev, Fails in Prod
+
+Compare configurations, credentials, network, and environment variables.
+
+77. Rollback
+
+Redeploy previous stable Docker image.
+
+78. Version 1.2 Failed
+
+Roll back to version 1.1 immediately and investigate logs.
+
+79. Concurrency Issue
+
+Multiple builds updating the same resource simultaneously.
+
+options { disableConcurrentBuilds()}
+80. Production Approvals
+
+Usually Developer Lead → QA Lead → Manager approval before production deployment.
+
+For interviews, answer in this format:
+
+"In my current project, we use GitHub, Jenkins, SonarQube, Trivy, Docker, AWS ECR, and EKS. The pipeline starts when developers push code, Jenkins builds the application, performs quality and security checks, creates Docker images, pushes them to ECR, and deploys them to EKS."
+
+This project-based answer impresses interviewers more than theoretical definitions.
