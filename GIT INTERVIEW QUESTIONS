@@ -27,3 +27,95 @@ git checkout main
 git cherry-pick abc123
 
 Git will copy the changes from commit abc123 and create a new commit on main.
+…………………………………………………………………………………………………………………………………………………………….
+4)	"What branching strategy do you follow in your project?
+
+In my company, we followed a well-structured Git branching model similar to the Kubernetes project's workflow. Our strategy centered around four key branches:
+Note : We are follow the truck based 
+                        …………………………………………………………………………………………
+In our project, we primarily follow the Git Flow branching strategy.
+Branches used:
+•	main/master – Production-ready code. 
+•	develop – Integration branch for ongoing development.  (If needed)
+•	feature/* – Created for new features or enhancements. 
+•	release/* – Used for release preparation and testing. 
+•	hotfix/* – Used for urgent production fixes. 
+Workflow:
+1.	Developers create a feature branch from develop. 
+2.	Changes are committed and pushed to the feature branch. 
+3.	A Pull Request (PR) is raised for code review. 
+4.	After approval, the feature branch is merged into develop. 
+5.	Before deployment, a release branch is created for testing. 
+6.	Once validated, the release branch is merged into main and tagged. 
+7.	Critical production issues are fixed through a hotfix branch and merged back into both main and develop. 
+8.	
+For DevOps/Agile Projects (Common Real-Time Answer)
+We follow a feature-branch workflow. Developers create feature branches from the main development branch, raise pull requests for peer review, and merge changes after approval. For production releases, we use release branches, and urgent production fixes are handled through hotfix branches. This approach helps maintain code quality, supports CI/CD pipelines, and enables controlled deployments.
+
+5)	"How do you resolve merge conflicts?"
+
+When a merge conflict occurs, I first identify the conflicting files using git status. Then, I open the files and manually review the conflict markers (<<<<<<<, =======, >>>>>>>). After deciding which changes to keep or combining both changes, I remove the conflict markers, save the files, and stage them using git add. Finally, I complete the merge with git commit. I also run tests to ensure everything works correctly before pushing the changes.
+        ……………………………………………………………………………………………………………………………
+If two developers modify the same lines in a file, Git cannot automatically decide which version to keep. In that case, I discuss the changes with the team if needed, merge the required code manually, test the application, and then complete the merge.
+
+6)	"What is the difference between git pull and fetch?"
+
+Git Fetch
+git fetch origin
+•	Downloads the latest changes from the remote repository. 
+•	Does not merge them into your current branch. 
+Git Pull
+git pull origin main
+•	Downloads the latest changes. 
+•	Automatically merges them into your current branch.
+
+7)	What is the difference between Git and GitHub
+
+Short Interview Answer
+Git is a distributed version control system used to track and manage source code changes, while GitHub is a cloud-based platform that hosts Git repositories and provides collaboration features such as Pull Requests, code reviews, and CI/CD integrations.
+
+8)	Difference between revert, rebase, and merge?
+
+Git Merge combines two branches and creates a merge commit while preserving history. 
+Git Rebase moves commits from one branch onto another to create a clean linear history by rewriting commit history.
+ Git Revert safely undoes a specific commit by creating a new commit that reverses the changes without modifying existing history.
+
+9)	What is GitHub Actions? Have you used it?
+
+Yes, I have used GitHub Actions for CI/CD automation. GitHub Actions is a workflow automation service provided by GitHub that helps automate software development tasks such as building, testing, and deploying applications whenever specific events occur, like a code push, pull request, or release creation.
+
+10)	How do you configure webhooks to trigger Jenkins from Git?
+
+I configure a webhook in GitHub (or GitLab/Bitbucket) to notify Jenkins whenever code is pushed to the repository. Jenkins receives the webhook event and automatically triggers
+
+11)	What is .gitignore?
+
+Answer:
+A file used to specify files and folders that Git should not track.
+
+12)	What branching strategy do you follow?
+
+Answer:
+Feature Branch Workflow:
+•	Create feature branches 
+•	Raise Pull Requests 
+•	Code Review 
+•	Merge after approval 
+•	Use hotfix branches for production issues
+
+13)	What is a Pull Request (PR)?
+
+Answer:
+A Pull Request is used to propose code changes and request a review before merging into another branch.
+14)	 Difference between Fork and Clone?
+Fork → Copy repository on GitHub. 
+Clone → Copy repository to local machine
+
+15)	How do you recover a deleted commit?
+
+git reflog
+
+
+
+
+
